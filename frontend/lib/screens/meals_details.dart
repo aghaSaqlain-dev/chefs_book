@@ -45,6 +45,18 @@ class MealsDetailsScreen extends ConsumerWidget {
               height: 300,
               width: double.infinity,
               fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return Container(
+                  height: 300,
+                  width: double.infinity,
+                  color: Colors.grey[200],
+                  child: Icon(
+                    Icons.image_not_supported,
+                    size: 50,
+                    color: Colors.grey,
+                  ),
+                );
+              },
             ),
             const SizedBox(
               height: 14,

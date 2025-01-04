@@ -1,4 +1,3 @@
-// filepath: /c:/Users/Lenovo/Desktop/chefs_book/frontend/lib/models/category.dart
 import 'package:flutter/material.dart';
 
 class Category {
@@ -19,7 +18,7 @@ class Category {
       color: _colorFromHex(json['color']),
     );
   }
-
+  //converting string hex to int hex value then making it a color object
   static Color _colorFromHex(String hexColor) {
     hexColor = hexColor.replaceAll('#', '');
     if (hexColor.length == 6) {

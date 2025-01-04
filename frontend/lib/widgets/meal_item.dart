@@ -40,6 +40,18 @@ class MealItem extends StatelessWidget {
                 fit: BoxFit.cover,
                 height: 200,
                 width: double.infinity,
+                imageErrorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    height: 200,
+                    width: double.infinity,
+                    color: Colors.grey[200],
+                    child: Icon(
+                      Icons.image_not_supported,
+                      size: 50,
+                      color: Colors.grey,
+                    ),
+                  );
+                },
               ),
               Positioned(
                 left: 0,
