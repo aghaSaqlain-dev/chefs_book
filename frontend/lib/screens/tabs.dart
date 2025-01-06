@@ -1,3 +1,4 @@
+import 'package:chefs_book/screens/chefs_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:chefs_book/providers/favorites_provider.dart';
 import 'package:chefs_book/screens/categories.dart';
@@ -59,12 +60,15 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
     );
     var activePageTitle = 'Categories';
 
-    if (_selectedPageIndex == 1) {
+    if (_selectedPageIndex == 2) {
       final favMeals = ref.watch(favoriteMealsprovider);
       activePage = MealsScreen(
         meals: favMeals,
       );
       activePageTitle = 'Your Favorites';
+    } else if (_selectedPageIndex == 1) {
+      activePage = ChefsScreen();
+      activePageTitle = 'Master Chefs';
     }
 
     return Scaffold(
@@ -80,6 +84,10 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.set_meal),
             label: 'Categories',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.restaurant),
+            label: 'Chefs',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.star),

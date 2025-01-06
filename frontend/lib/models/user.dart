@@ -5,18 +5,30 @@ class User {
   final String name;
   final String email;
   final String password;
-  final String address;
-  final String type;
-  final String token;
+  final String profilePictureUrl;
+  final String phone;
+  final List<String> specialties;
+  final int experienceYears;
+  final String currentRole;
+  final String location;
+  final String restaurantName;
+  final String restaurantLocation;
+  final String restaurantWebsite;
 
   User({
     required this.id,
     required this.name,
     required this.email,
     required this.password,
-    required this.address,
-    required this.type,
-    required this.token,
+    required this.profilePictureUrl,
+    required this.phone,
+    required this.specialties,
+    required this.experienceYears,
+    required this.currentRole,
+    required this.location,
+    required this.restaurantName,
+    required this.restaurantLocation,
+    required this.restaurantWebsite,
   });
 
   Map<String, dynamic> toMap() {
@@ -25,21 +37,33 @@ class User {
       'name': name,
       'email': email,
       'password': password,
-      'address': address,
-      'type': type,
-      'token': token,
+      'profilePictureUrl': profilePictureUrl,
+      'phone': phone,
+      'specialties': specialties,
+      'experienceYears': experienceYears,
+      'currentRole': currentRole,
+      'location': location,
+      'restaurantName': restaurantName,
+      'restaurantLocation': restaurantLocation,
+      'restaurantWebsite': restaurantWebsite,
     };
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
-      id: map['_id'] ?? '',
+      id: map['id'] ?? '',
       name: map['name'] ?? '',
       email: map['email'] ?? '',
       password: map['password'] ?? '',
-      address: map['address'] ?? '',
-      type: map['type'] ?? '',
-      token: map['token'] ?? '',
+      profilePictureUrl: map['profilePictureUrl'] ?? '',
+      phone: map['phone'] ?? '',
+      specialties: List<String>.from(map['specialties'] ?? []),
+      experienceYears: map['experienceYears'] ?? 0,
+      currentRole: map['currentRole'] ?? '',
+      location: map['location'] ?? '',
+      restaurantName: map['restaurantName'] ?? '',
+      restaurantLocation: map['restaurantLocation'] ?? '',
+      restaurantWebsite: map['restaurantWebsite'] ?? '',
     );
   }
 
@@ -52,18 +76,30 @@ class User {
     String? name,
     String? email,
     String? password,
-    String? address,
-    String? type,
-    String? token,
+    String? profilePictureUrl,
+    String? phone,
+    List<String>? specialties,
+    int? experienceYears,
+    String? currentRole,
+    String? location,
+    String? restaurantName,
+    String? restaurantLocation,
+    String? restaurantWebsite,
   }) {
     return User(
       id: id ?? this.id,
       name: name ?? this.name,
       email: email ?? this.email,
       password: password ?? this.password,
-      address: address ?? this.address,
-      type: type ?? this.type,
-      token: token ?? this.token,
+      profilePictureUrl: profilePictureUrl ?? this.profilePictureUrl,
+      phone: phone ?? this.phone,
+      specialties: specialties ?? this.specialties,
+      experienceYears: experienceYears ?? this.experienceYears,
+      currentRole: currentRole ?? this.currentRole,
+      location: location ?? this.location,
+      restaurantName: restaurantName ?? this.restaurantName,
+      restaurantLocation: restaurantLocation ?? this.restaurantLocation,
+      restaurantWebsite: restaurantWebsite ?? this.restaurantWebsite,
     );
   }
 }

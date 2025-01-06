@@ -1,3 +1,4 @@
+import 'package:chefs_book/screens/chefs_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:chefs_book/screens/auth_Screen.dart';
@@ -28,8 +29,8 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: theme,
-      home: const TabsScreen(),
-      //me: const AuthScreen(),
+      home: AuthScreen(),
+      // home: ChefsScreen(),
     );
   }
 }
