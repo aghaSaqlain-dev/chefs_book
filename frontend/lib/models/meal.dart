@@ -1,4 +1,3 @@
-// filepath: /c:/Users/Lenovo/Desktop/chefs_book/frontend/lib/models/meal.dart
 class Meal {
   final String id;
   final List<String> categories;
@@ -32,8 +31,8 @@ class Meal {
 
   factory Meal.fromJson(Map<String, dynamic> json) {
     return Meal(
-      id: json['id'],
-      categories: List<String>.from(json['categories']),
+      id: json['id'] ?? '',
+      categories: List<String>.from(json['categories']) ?? [],
       title: json['title'],
       affordability: json['affordability'],
       complexity: json['complexity'],

@@ -1,5 +1,6 @@
+import 'package:chefs_book/screens/chef_recipe_screen.dart';
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ChefProfile extends StatefulWidget {
   final int imagePosition;
@@ -13,20 +14,25 @@ class ChefProfile extends StatefulWidget {
   final String restaurantLocation;
   final String restaurantWebsite;
   final Color cardColor;
-
-  ChefProfile({
-    required this.imagePosition,
-    required this.name,
-    required this.email,
-    required this.specialties,
-    required this.experienceYears,
-    required this.currentRole,
-    required this.location,
-    required this.restaurantName,
-    required this.restaurantLocation,
-    required this.restaurantWebsite,
-    required this.cardColor,
-  });
+  final String profilePictureUrl;
+  final int worldRank;
+  final String phone;
+  ChefProfile(
+      {required this.imagePosition,
+      required this.name,
+      required this.email,
+      required this.specialties,
+      required this.experienceYears,
+      required this.currentRole,
+      required this.location,
+      required this.restaurantName,
+      required this.restaurantLocation,
+      required this.restaurantWebsite,
+      required this.cardColor,
+      required this.profilePictureUrl,
+      required this.worldRank,
+      required this.phone});
+  //phone, world rank,rating
 
   @override
   _ChefProfileState createState() => _ChefProfileState();
@@ -101,7 +107,7 @@ class _ChefProfileState extends State<ChefProfile>
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16.0),
         child: Image.network(
-          'https://unsplash.com/photos/this-is-the-sign-youve-been-looking-for-neon-signage-ukzHlkoz1IE',
+          widget.profilePictureUrl,
           fit: BoxFit.cover,
           errorBuilder:
               (BuildContext context, Object exception, StackTrace? stackTrace) {
@@ -117,7 +123,7 @@ class _ChefProfileState extends State<ChefProfile>
   }
 
   Widget _buildName() {
-    return Expanded(
+    return Flexible(
       flex: 1,
       child: Column(
         children: [
@@ -130,19 +136,42 @@ class _ChefProfileState extends State<ChefProfile>
             ),
             textAlign: TextAlign.center,
           ),
+          SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              FaIcon(
+                FontAwesomeIcons.medal,
+                color: Colors.amber, // Gold-like color
+                size: 20,
+              ),
+              SizedBox(width: 8),
+              Text(
+                widget.worldRank.toString(),
+                style: TextStyle(fontSize: 20, color: Colors.white),
+              ),
+            ],
+          ),
           if (!isExpanded)
             Row(
+              crossAxisAlignment:
+                  CrossAxisAlignment.start, // Aligns to the top for better flow
               children: [
                 Icon(
                   Icons.email_outlined,
                   color: Colors.white,
                   size: 20,
                 ),
-                Text(
-                  ' ${widget.email}',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
+                Flexible(
+                  // This will allow the email to wrap to the next line
+                  child: Text(
+                    ' ${widget.email}',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                    ),
+                    overflow: TextOverflow
+                        .visible, // Allow the email to wrap instead of truncating
                   ),
                 ),
               ],
@@ -156,25 +185,46 @@ class _ChefProfileState extends State<ChefProfile>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          height: 8,
-        ),
         Row(
           children: [
-            _buildDetailText('Specialty:', widget.specialties, 24),
+            Text('world rank ',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                )),
+            SizedBox(height: 8),
+            FaIcon(
+              FontAwesomeIcons.medal,
+              color: Colors.amber, // Gold-like color
+              size: 20,
+            ),
+            Text(' ${widget.worldRank.toString()}',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                )),
           ],
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Expanded(
+            Flexible(
+              child: _buildDetailText('Specialty:', widget.specialties, 24),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Flexible(
               child: _buildDetailText(
-                  'Experience:', '${widget.experienceYears}', 17),
+                  'Experience:', '${widget.experienceYears}', 19),
             ),
             SizedBox(width: 16),
-            Expanded(
-                child:
-                    _buildDetailText('Current Role:', widget.currentRole, 17)),
+            Flexible(
+              child: _buildDetailText('Current Role:', widget.currentRole, 19),
+            ),
           ],
         ),
         SizedBox(height: 8),
@@ -182,12 +232,28 @@ class _ChefProfileState extends State<ChefProfile>
         _buildDetailText('Location:', widget.restaurantLocation, 24),
         SizedBox(height: 8),
         Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            Padding(
+              padding: EdgeInsets.only(left: 20),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return ChefRecipeScreen(
+                        chefId: widget.email, chefName: widget.name);
+                  }));
+                },
+                child: Text(
+                  'recipes',
+                  style: TextStyle(color: Colors.amber, fontSize: 18),
+                ),
+              ),
+            ),
             Column(
               children: [
-                _buildDetailText('Email:', widget.email, 14),
-                _buildDetailText('Website:', widget.restaurantWebsite, 14),
+                _buildDetailText('phone :', widget.phone, 14),
+                _buildDetailText('Email :', widget.email, 14),
+                _buildDetailText('Website :', widget.restaurantWebsite, 14),
               ],
             ),
           ],
@@ -197,6 +263,9 @@ class _ChefProfileState extends State<ChefProfile>
   }
 
   Widget _buildDetailText(String label, String value, double textSize) {
+    bool isSelectable = label.toLowerCase() == 'website :' ||
+        label.toLowerCase() == 'email :' ||
+        label.toLowerCase() == 'phone :';
     return Padding(
       padding: const EdgeInsets.only(bottom: 4.0),
       child: RichText(
@@ -204,18 +273,29 @@ class _ChefProfileState extends State<ChefProfile>
           text: '$label ',
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: textSize - 5,
+            fontSize: textSize - 3,
             color: Colors.grey,
           ),
           children: [
-            TextSpan(
-              text: value ?? 'value not found',
-              style: TextStyle(
-                fontWeight: FontWeight.normal,
-                fontSize: textSize,
-                color: Colors.white,
-              ),
-            ),
+            isSelectable
+                ? WidgetSpan(
+                    child: SelectableText(
+                      value,
+                      style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: textSize,
+                        color: Colors.white,
+                      ),
+                    ),
+                  )
+                : TextSpan(
+                    text: value ?? 'value not found',
+                    style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      fontSize: textSize,
+                      color: Colors.white,
+                    ),
+                  ),
           ],
         ),
       ),

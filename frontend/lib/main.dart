@@ -1,8 +1,6 @@
-import 'package:chefs_book/screens/chefs_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:chefs_book/screens/auth_Screen.dart';
-import 'package:chefs_book/screens/tabs.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final theme = ThemeData(

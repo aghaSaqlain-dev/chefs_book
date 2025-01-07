@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:chefs_book/data/dummy_data.dart';
+import 'package:chefs_book/data/data.dart';
 import 'package:chefs_book/models/meal.dart';
 import 'package:chefs_book/screens/meals.dart';
 import 'package:chefs_book/widgets/category_grid_item.dart';

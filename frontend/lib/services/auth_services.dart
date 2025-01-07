@@ -1,70 +1,74 @@
 import 'dart:convert';
-import 'package:chefs_book/constants/handle_error.dart';
-import 'package:chefs_book/constants/global_variables.dart';
 import 'package:chefs_book/screens/add_dish_screen.dart';
-import 'package:chefs_book/screens/tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:chefs_book/constants/handle_error.dart';
-import 'package:chefs_book/constants/utils.dart';
 import 'package:chefs_book/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+void showSnackBar(BuildContext context, String message) {
+  final snackBar = SnackBar(content: Text(message));
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
+
 class AuthService {
-  String? uri = 'http://localhost:3000';
+  String? uri = 'http://localhost:3000/api/auth';
   // sign up user
   void signUpUser({
     required BuildContext context,
-    required String email,
-    required String password,
     required String name,
-    required String profilePictureUrl,
+    required String email,
     required String phone,
+    required String profilePictureUrl,
     required List<String> specialties,
     required int experienceYears,
     required String currentRole,
     required String location,
+    required double rating,
+    required int worldRank,
     required String restaurantName,
     required String restaurantLocation,
     required String restaurantWebsite,
+    required String password,
   }) async {
     try {
       User user = User(
-        id: '',
         name: name,
-        password: password,
         email: email,
-        profilePictureUrl: profilePictureUrl,
         phone: phone,
+        profilePictureUrl: profilePictureUrl,
         specialties: specialties,
         experienceYears: experienceYears,
         currentRole: currentRole,
         location: location,
+        rating: rating,
+        worldRank: worldRank,
         restaurantName: restaurantName,
         restaurantLocation: restaurantLocation,
         restaurantWebsite: restaurantWebsite,
+        password: password,
       );
-      // json post to backend
+
+      // JSON post to backend
       http.Response res = await http.post(
-        //uri from global variable
-        Uri.parse('$uri/api/signup'),
-        body: jsonEncode(user.toJson()),
+        Uri.parse('$uri/signup'),
+        body: user.toJson(), // Ensure this is correctly formatted
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
 
-      httpErrorHandle(
-        response: res,
-        context: context,
-        onSuccess: () {
-          showSnackBar(
-            context,
-            'Account created! Login with the same credentials!',
-          );
-        },
-      );
+      // Check if the HTTP response was successful (status code 200)
+      if (res.statusCode == 200) {
+        showSnackBar(
+          context,
+          'Account created! Login with the same credentials!',
+        );
+      } else {
+        // If the status code is not 200, show an error with the response message
+        showSnackBar(context, 'Error: ${res.body}');
+      }
     } catch (e) {
+      // Handle any other exceptions by showing the error message
       showSnackBar(context, e.toString());
     }
   }
@@ -77,7 +81,7 @@ class AuthService {
   }) async {
     try {
       final response = await http.post(
-        Uri.parse('$uri/api/auth/signin'),
+        Uri.parse('$uri/signin'),
         body: jsonEncode({
           'email': email,
           'password': password,
@@ -89,58 +93,19 @@ class AuthService {
 
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
-        // final token = responseData['token'];
+        final token = responseData['token'];
 
-        // final prefs = await SharedPreferences.getInstance();
-        // await prefs.setString('token', token);
-
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('token', token);
+        debugPrint('Token: $token');
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => AddDishScreen()));
       } else {
-        throw Exception('Failed to sign in');
+        throw Exception(response.body);
       }
     } catch (e) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.toString())));
     }
   }
-
-//   // get user data
-//   void getUserData(
-//     BuildContext context,
-//   ) async {
-//     try {
-//       SharedPreferences prefs = await SharedPreferences.getInstance();
-//       String? token = prefs.getString('x-auth-token');
-
-//       if (token == null) {
-//         prefs.setString('x-auth-token', '');
-//       }
-
-//       var tokenRes = await http.post(
-//         Uri.parse('$uri/tokenIsValid'),
-//         headers: <String, String>{
-//           'Content-Type': 'application/json; charset=UTF-8',
-//           'x-auth-token': token!
-//         },
-//       );
-
-//       var response = jsonDecode(tokenRes.body);
-
-//       if (response == true) {
-//         http.Response userRes = await http.get(
-//           Uri.parse('$uri/'),
-//           headers: <String, String>{
-//             'Content-Type': 'application/json; charset=UTF-8',
-//             'x-auth-token': token
-//           },
-//         );
-
-//         var userProvider = Provider.of<UserProvider>(context, listen: false);
-//         userProvider.setUser(userRes.body);
-//       }
-//     } catch (e) {
-//       showSnackBar(context, e.toString());
-//     }
-//   }
 }

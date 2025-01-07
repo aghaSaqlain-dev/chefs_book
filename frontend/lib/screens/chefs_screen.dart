@@ -1,28 +1,55 @@
 import 'package:chefs_book/constants/global_variables.dart';
+import 'package:chefs_book/data/data.dart';
+import 'package:chefs_book/models/user.dart';
 import 'package:chefs_book/widgets/chef_profile.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 
-class ChefsScreen extends StatelessWidget {
+class ChefsScreen extends ConsumerWidget {
   int counter = 0;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      body: ListView.builder(
-        itemCount: 3, // Number of chef profiles to display
-        itemBuilder: (ctx, index) {
-          return ChefProfile(
-              imagePosition: index,
-              name: 'Chef ${index + 1}',
-              email: 'chef${index + 1}@example.com',
-              specialties: 'Specialty ${index + 1}, Specialty ${index + 2}',
-              experienceYears: '${index + 5} years',
-              currentRole: 'Role ${index + 1}',
-              location: 'Location ${index + 1}',
-              restaurantName: 'Restaurant ${index + 1}',
-              restaurantLocation: 'City ${index + 1}',
-              restaurantWebsite: 'www.restaurant${index + 1}.com',
-              cardColor: GlobalVariables.blackShade);
+      body: FutureBuilder<List<User>>(
+        future: availableChefs,
+        builder: (ctx, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(
+                child: Text(
+              'Error: ${snapshot.error}',
+              style: TextStyle(color: Colors.red),
+            ));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return Center(
+                child: Text('No chefs found',
+                    style: TextStyle(color: Colors.red)));
+          } else {
+            final chefsList = snapshot.data!;
+            return ListView.builder(
+              itemCount: chefsList.length, // Number of chef profiles to display
+              itemBuilder: (ctx, index) {
+                final chef = chefsList[index];
+                return ChefProfile(
+                  imagePosition: index,
+                  name: chef.name,
+                  email: chef.email,
+                  specialties: chef.specialties.join(', '),
+                  experienceYears: '${chef.experienceYears} years',
+                  currentRole: chef.currentRole,
+                  location: chef.location,
+                  restaurantName: chef.restaurantName,
+                  restaurantLocation: chef.restaurantLocation,
+                  restaurantWebsite: chef.restaurantWebsite,
+                  cardColor: GlobalVariables.blackShade,
+                  profilePictureUrl: chef.profilePictureUrl,
+                  worldRank: chef.worldRank,
+                  phone: chef.phone,
+                );
+              },
+            );
+          }
         },
       ),
     );

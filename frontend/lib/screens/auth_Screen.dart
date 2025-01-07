@@ -12,6 +12,8 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   Auth _auth = Auth.signin;
+  // creates two unique keys for the sign-up and sign-in forms,
+  // allowing you to access and control their states using FormState methods, such as validation.
   final _signUpFormKey = GlobalKey<FormState>();
   final _signInFormKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
@@ -25,17 +27,21 @@ class _AuthScreenState extends State<AuthScreen> {
       TextEditingController();
   final TextEditingController _currentRoleController = TextEditingController();
   final TextEditingController _locationController = TextEditingController();
+  final TextEditingController _ratingController = TextEditingController();
+  final TextEditingController _worldRankController = TextEditingController();
   final TextEditingController _restaurantNameController =
       TextEditingController();
   final TextEditingController _restaurantLocationController =
       TextEditingController();
   final TextEditingController _restaurantWebsiteController =
       TextEditingController();
+  // authService is an instance of the AuthService class, which is used to sign up and sign in users.
   final AuthService authService = AuthService();
   String? welcomeNote = 'register account as a chef';
 
   @override
   void dispose() {
+    //dispose destroys the objects. called when the object will never build again
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
@@ -46,6 +52,8 @@ class _AuthScreenState extends State<AuthScreen> {
     _experienceYearsController.dispose();
     _currentRoleController.dispose();
     _locationController.dispose();
+    _ratingController.dispose();
+    _worldRankController.dispose();
     _restaurantNameController.dispose();
     _restaurantLocationController.dispose();
     _restaurantWebsiteController.dispose();
@@ -63,6 +71,8 @@ class _AuthScreenState extends State<AuthScreen> {
       experienceYears: int.parse(_experienceYearsController.text),
       currentRole: _currentRoleController.text,
       location: _locationController.text,
+      rating: double.parse(_ratingController.text),
+      worldRank: int.parse(_worldRankController.text),
       restaurantName: _restaurantNameController.text,
       restaurantLocation: _restaurantLocationController.text,
       restaurantWebsite: _restaurantWebsiteController.text,
@@ -87,7 +97,9 @@ class _AuthScreenState extends State<AuthScreen> {
     return Scaffold(
       backgroundColor: GlobalVariables.unselectedNavBarColor,
       body: SafeArea(
+        // make widget avoid opertaing system areas such as battery percentage, time, etc
         child: SingleChildScrollView(
+          // a single widget that can be scrolled
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -191,6 +203,18 @@ class _AuthScreenState extends State<AuthScreen> {
                           decoration: InputDecoration(labelText: 'Location'),
                         ),
                         TextFormField(
+                          controller: _ratingController,
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(labelText: 'Rating'),
+                          keyboardType: TextInputType.number,
+                        ),
+                        TextFormField(
+                          controller: _worldRankController,
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(labelText: 'World Rank'),
+                          keyboardType: TextInputType.number,
+                        ),
+                        TextFormField(
                           controller: _restaurantNameController,
                           style: TextStyle(color: Colors.white),
                           decoration:
@@ -253,19 +277,21 @@ class _AuthScreenState extends State<AuthScreen> {
                       children: [
                         TextFormField(
                           controller: _emailController,
+                          style: TextStyle(color: Colors.white),
                           decoration: InputDecoration(labelText: 'Email'),
                         ),
                         TextFormField(
                           controller: _passwordController,
+                          style: TextStyle(color: Colors.white),
                           decoration: InputDecoration(labelText: 'Password'),
                           obscureText: true,
                         ),
                         SizedBox(height: 20),
                         ElevatedButton(
+                          onPressed: signInUser,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: GlobalVariables.secondaryColor,
                           ),
-                          onPressed: signInUser,
                           child: Text(
                             'Sign In',
                             style: TextStyle(color: Colors.white),
@@ -298,7 +324,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       ),
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),

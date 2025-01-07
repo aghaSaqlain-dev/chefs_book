@@ -1,35 +1,34 @@
 import mongoose from 'mongoose';
 
-
 const chefSchema = new mongoose.Schema({
     chef_id: {
         type: String,
-        required: true,
-        unique: true
+        unique: true, // To match the unique index in the database
+        default: () => new mongoose.Types.ObjectId().toString() // Generate unique `chef_id` if not provided
     },
     name: {
         type: String,
         required: true
     },
-    profile_picture_url: {
+    profilePictureUrl: {
         type: String
     },
-    contact_info: {
-        phone: {
-            type: String
-        },
-        email: {
-            type: String
-        }
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    phone: {
+        type: String
     },
     specialties: {
         type: [String]
     },
-    experience_years: {
+    experienceYears: {
         type: Number,
         required: true
     },
-    current_role: {
+    currentRole: {
         type: String
     },
     location: {
@@ -40,22 +39,22 @@ const chefSchema = new mongoose.Schema({
         min: 0,
         max: 5
     },
-    world_rank: {
+    worldRank: {
         type: Number
     },
-    restaurant: {
-        name: {
-            type: String
-        },
-        location: {
-            type: String
-        },
-        website: {
-            type: String
-        }
+    restaurantName: {
+        type: String
+    },
+    restaurantLocation: {
+        type: String
+    },
+    restaurantWebsite: {
+        type: String
+    },
+    password: {
+        type: String,
+        required: true
     }
 }, { collection: 'chefs' });
-
-
 
 export default mongoose.model('Chef', chefSchema);
