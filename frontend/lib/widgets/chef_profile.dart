@@ -17,8 +17,9 @@ class ChefProfile extends StatefulWidget {
   final String profilePictureUrl;
   final int worldRank;
   final String phone;
-  ChefProfile(
-      {required this.imagePosition,
+  const ChefProfile(
+      {super.key,
+      required this.imagePosition,
       required this.name,
       required this.email,
       required this.specialties,
@@ -154,8 +155,7 @@ class _ChefProfileState extends State<ChefProfile>
           ),
           if (!isExpanded)
             Row(
-              crossAxisAlignment:
-                  CrossAxisAlignment.start, // Aligns to the top for better flow
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Icon(
                   Icons.email_outlined,
@@ -163,15 +163,13 @@ class _ChefProfileState extends State<ChefProfile>
                   size: 20,
                 ),
                 Flexible(
-                  // This will allow the email to wrap to the next line
                   child: Text(
                     ' ${widget.email}',
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.white,
                     ),
-                    overflow: TextOverflow
-                        .visible, // Allow the email to wrap instead of truncating
+                    overflow: TextOverflow.visible,
                   ),
                 ),
               ],
@@ -218,8 +216,8 @@ class _ChefProfileState extends State<ChefProfile>
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Flexible(
-              child: _buildDetailText(
-                  'Experience:', '${widget.experienceYears}', 19),
+              child:
+                  _buildDetailText('Experience:', widget.experienceYears, 19),
             ),
             SizedBox(width: 16),
             Flexible(

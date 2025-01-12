@@ -29,10 +29,13 @@ class MealsDetailsScreen extends ConsumerWidget {
 
                 ScaffoldMessenger.of(context)
                     .clearSnackBars(); // to clear all the existing snackbars
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
                     content: Text(wasAdded
                         ? 'favorite meal added'
-                        : ' meal remoed from favorites')));
+                        : ' meal removed from favorites'),
+                  ),
+                );
               },
               icon: Icon(isFavorite ? Icons.star : Icons.star_border))
         ],
@@ -74,8 +77,10 @@ class MealsDetailsScreen extends ConsumerWidget {
             for (final ingredient in meal.ingredients)
               Text(
                 ingredient,
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: Theme.of(context).colorScheme.onSurface),
               ),
             const SizedBox(
               height: 24,
@@ -94,8 +99,10 @@ class MealsDetailsScreen extends ConsumerWidget {
                 child: Text(
                   step,
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: Theme.of(context).colorScheme.onBackground),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: Theme.of(context).colorScheme.onSurface),
                 ),
               ),
             const SizedBox(

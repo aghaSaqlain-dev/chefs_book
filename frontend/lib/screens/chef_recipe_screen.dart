@@ -10,7 +10,8 @@ class ChefRecipeScreen extends ConsumerWidget {
   final String chefId; // Assuming this is the email
   final String chefName;
 
-  ChefRecipeScreen({super.key, required this.chefId, required this.chefName});
+  const ChefRecipeScreen(
+      {super.key, required this.chefId, required this.chefName});
 
   void selectedMeal(BuildContext context, Meal meal) {
     Navigator.of(context).push(MaterialPageRoute(
@@ -38,14 +39,14 @@ class ChefRecipeScreen extends ConsumerWidget {
                   Text(
                     'No recipes found...',
                     style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-                          color: Theme.of(context).colorScheme.onBackground,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                   ),
                   const SizedBox(height: 16),
                   Text(
                     'Try selecting something else.',
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          color: Theme.of(context).colorScheme.onBackground,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                   ),
                 ],

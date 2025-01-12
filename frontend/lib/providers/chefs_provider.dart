@@ -1,4 +1,4 @@
-import 'package:chefs_book/models/user.dart';
+import 'package:chefs_book/models/chef.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:chefs_book/data/data.dart';
 

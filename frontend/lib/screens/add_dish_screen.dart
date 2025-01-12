@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:chefs_book/services/dish_service.dart';
 
 class AddDishScreen extends StatefulWidget {
+  const AddDishScreen({super.key});
+
   @override
   _AddDishScreenState createState() => _AddDishScreenState();
 }
@@ -56,6 +58,7 @@ class _AddDishScreenState extends State<AddDishScreen> {
           child: ListView(
             children: [
               TextFormField(
+                style: TextStyle(color: Colors.white),
                 decoration:
                     InputDecoration(labelText: 'Categories (comma separated)'),
                 validator: (value) {
@@ -69,6 +72,7 @@ class _AddDishScreenState extends State<AddDishScreen> {
                 },
               ),
               TextFormField(
+                style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(labelText: 'Title'),
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -81,6 +85,7 @@ class _AddDishScreenState extends State<AddDishScreen> {
                 },
               ),
               TextFormField(
+                style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(labelText: 'Affordability'),
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -93,6 +98,7 @@ class _AddDishScreenState extends State<AddDishScreen> {
                 },
               ),
               TextFormField(
+                style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(labelText: 'Complexity'),
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -105,6 +111,7 @@ class _AddDishScreenState extends State<AddDishScreen> {
                 },
               ),
               TextFormField(
+                style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(labelText: 'Image URL'),
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -117,6 +124,7 @@ class _AddDishScreenState extends State<AddDishScreen> {
                 },
               ),
               TextFormField(
+                style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(labelText: 'Duration (in minutes)'),
                 keyboardType: TextInputType.number,
                 validator: (value) {
@@ -133,6 +141,7 @@ class _AddDishScreenState extends State<AddDishScreen> {
                 },
               ),
               TextFormField(
+                style: TextStyle(color: Colors.white),
                 decoration:
                     InputDecoration(labelText: 'Ingredients (comma separated)'),
                 validator: (value) {
@@ -146,6 +155,7 @@ class _AddDishScreenState extends State<AddDishScreen> {
                 },
               ),
               TextFormField(
+                style: TextStyle(color: Colors.white),
                 decoration:
                     InputDecoration(labelText: 'Steps (comma separated)'),
                 validator: (value) {

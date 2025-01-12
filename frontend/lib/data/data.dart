@@ -1,11 +1,12 @@
-import 'package:chefs_book/models/user.dart';
+import 'package:chefs_book/models/chef.dart';
 import 'package:flutter/material.dart';
 import 'package:chefs_book/models/category.dart';
 import 'package:chefs_book/models/meal.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-const String baseUrl = 'http://localhost:3000/api'; //ip address also works
+// const String baseUrl = 'http://localhost:3000/api'; //ip address also works
+const String baseUrl = 'http://172.20.53.253/api'; //ip address also works
 
 Future<List<Category>> _fetchCategories() async {
   final response = await http.get(Uri.parse('$baseUrl/categories'));
@@ -37,7 +38,7 @@ Future<List<User>> _fetchChefs() async {
   // debugPrint("Response body: ${response.body}");
   if (response.statusCode == 200) {
     List<dynamic> data = jsonDecode(response.body);
-    debugPrint("Response body: ${data}");
+    debugPrint("Response body: $data");
     final List<User> chefs = data.map((chef) => User.fromMap(chef)).toList();
 
     return chefs;
@@ -52,7 +53,7 @@ Future<List<Meal>> _fetchDishes(String email) async {
   debugPrint("Response body: ${response.body}");
   if (response.statusCode == 200) {
     List<dynamic> data = jsonDecode(response.body);
-    debugPrint("Response body: ${data}");
+    debugPrint("Response body: $data");
     return data.map((meal) => Meal.fromJson(meal)).toList();
   } else {
     throw Exception('Failed to load dishes');

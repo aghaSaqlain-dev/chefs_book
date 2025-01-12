@@ -19,7 +19,7 @@ class TabsScreen extends ConsumerStatefulWidget {
 }
 
 class _TabsScreenState extends ConsumerState<TabsScreen> {
-  void _selectPage(int index) {
+  void _selectedPage(int index) {
     ref.read(selectedPageIndexProvider.notifier).state = index;
   }
 
@@ -36,13 +36,21 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // watch :  To listen to changes in a provider's state and rebuild the widget whenever the provider's state updates. used When you want the UI to react to changes in the provider's state.
+
+    //read : To access the current value of a provider without listening to its changes. When you only need to access the provider's value for a one-time operation, such as updating the state or performing an action.
+    //       Does not cause the widget to rebuild if the provider's state changes
+
     // Watch the current page index from the provider
     final selectedPageIndex = ref.watch(selectedPageIndexProvider);
-
+    //.when is a convenient method provided by riverpod package to handle 3 possible states of the provider
     Widget activePage = ref.watch(filteredMealsProvider).when(
-          data: (meals) => CategoriesScreen(availableMeals: meals),
-          loading: () => const Center(child: CircularProgressIndicator()),
+          data: (meals) =>
+              CategoriesScreen(availableMeals: meals), //(AsyncData)
+          loading: () => const Center(
+              child: CircularProgressIndicator()), //await state(AsyncLoading)
           error: (err, stack) => Center(
+            //(AsyncError)
             child: Text(
               'Error: $err',
               style: const TextStyle(color: Colors.red),
@@ -68,7 +76,7 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
       drawer: MainDrawer(setScreen: _setScreen),
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(
-        onTap: _selectPage,
+        onTap: _selectedPage,
         currentIndex: selectedPageIndex,
         items: const [
           BottomNavigationBarItem(

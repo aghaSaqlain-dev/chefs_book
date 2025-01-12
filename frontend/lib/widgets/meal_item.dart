@@ -78,27 +78,28 @@ class MealItem extends StatelessWidget {
                         height: 12,
                       ),
                       Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            MealItemTrait(
-                              icon: Icons.schedule,
-                              label: meal.duration.toString() + ' min',
-                            ),
-                            const SizedBox(
-                              width: 12,
-                            ),
-                            MealItemTrait(
-                              icon: Icons.work,
-                              label: ComplexityTextFormatted,
-                            ),
-                            const SizedBox(
-                              width: 12,
-                            ),
-                            MealItemTrait(
-                              icon: Icons.attach_money,
-                              label: AffordabilityTextFormatted,
-                            ),
-                          ])
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          MealItemTrait(
+                            icon: Icons.schedule,
+                            label: '${meal.duration} min',
+                          ),
+                          const SizedBox(
+                            width: 12,
+                          ),
+                          MealItemTrait(
+                            icon: Icons.work,
+                            label: ComplexityTextFormatted,
+                          ),
+                          const SizedBox(
+                            width: 12,
+                          ),
+                          MealItemTrait(
+                            icon: Icons.attach_money,
+                            label: AffordabilityTextFormatted,
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ),

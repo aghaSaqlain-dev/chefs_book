@@ -4,7 +4,7 @@ import 'package:chefs_book/models/category.dart';
 class CategoryGridItem extends StatelessWidget {
   final Category category;
 
-  CategoryGridItem(
+  const CategoryGridItem(
       {super.key, required this.category, required this.onSelectCategory});
   final void Function() onSelectCategory;
 
@@ -28,7 +28,7 @@ class CategoryGridItem extends StatelessWidget {
         child: Text(
           category.title,
           style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                color: Theme.of(context).colorScheme.onBackground,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
         ),
       ),

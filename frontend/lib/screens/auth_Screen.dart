@@ -6,6 +6,8 @@ import 'package:chefs_book/services/auth_services.dart';
 enum Auth { signup, signin }
 
 class AuthScreen extends StatefulWidget {
+  const AuthScreen({super.key});
+
   @override
   _AuthScreenState createState() => _AuthScreenState();
 }

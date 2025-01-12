@@ -25,6 +25,8 @@ class CategoriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //The FutureBuilder widget in Flutter is used to build a user interface based on the state of a Future, which is used to represent an asynchronous operation.
+    // It listens to a Future and updates the UI once the Future is completed or an error occurs.
     return FutureBuilder<List<Category>>(
       future: availableCategories,
       builder: (context, snapshot) {

@@ -16,6 +16,7 @@ class MealsScreen extends StatelessWidget {
             )));
   }
 
+  @override
   Widget build(BuildContext context) {
     Widget content = Center(
       child: Column(
@@ -24,7 +25,7 @@ class MealsScreen extends StatelessWidget {
           Text(
             'no data found....sorry',
             style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.onBackground,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
           ),
           const SizedBox(
@@ -33,7 +34,7 @@ class MealsScreen extends StatelessWidget {
           Text(
             'try selecting something else',
             style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.onBackground,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
           )
         ],

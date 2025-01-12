@@ -1,12 +1,14 @@
 import 'package:chefs_book/constants/global_variables.dart';
 import 'package:chefs_book/data/data.dart';
-import 'package:chefs_book/models/user.dart';
+import 'package:chefs_book/models/chef.dart';
 import 'package:chefs_book/widgets/chef_profile.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 
 class ChefsScreen extends ConsumerWidget {
   int counter = 0;
+
+  ChefsScreen({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(

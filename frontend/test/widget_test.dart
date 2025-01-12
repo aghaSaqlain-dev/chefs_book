@@ -1,30 +1,95 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:chefs_book/main.dart';
+import 'package:chefs_book/widgets/category_grid_item.dart';
+import 'package:chefs_book/models/category.dart';
+import 'package:chefs_book/widgets/chef_profile.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  final testTheme = ThemeData(
+    useMaterial3: true,
+    colorScheme: ColorScheme.fromSeed(
+      brightness: Brightness.dark,
+      seedColor: const Color.fromARGB(255, 131, 57, 0),
+    ),
+    textTheme: GoogleFonts.latoTextTheme(),
+  );
+  // Sample data
+  final availableCategoriesFuture = Future<List<Category>>.value([
+    Category(id: 'c1', title: 'Italian', color: Colors.red),
+    Category(id: 'c2', title: 'Quick and Easy', color: Colors.green),
+    Category(id: 'c3', title: 'Elegant', color: Colors.blue),
+  ]);
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  testWidgets('Displays categories in a GridView', (WidgetTester tester) async {
+    await tester.pumpWidget(MaterialApp(
+      theme: testTheme,
+      home: FutureBuilder<List<Category>>(
+        future: availableCategoriesFuture,
+        builder: (context, snapshot) {
+          if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+            return GridView.builder(
+              padding: const EdgeInsets.all(16),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 3 / 2,
+                crossAxisSpacing: 20,
+                mainAxisSpacing: 20,
+              ),
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                final category = snapshot.data![index];
+                return CategoryGridItem(
+                  category: category,
+                  onSelectCategory: () {},
+                );
+              },
+            );
+          }
+          return const SizedBox.shrink();
+        },
+      ),
+    ));
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    expect(find.byType(GridView), findsOneWidget);
+    expect(find.byType(CategoryGridItem), findsNWidgets(2));
+  });
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  testWidgets('ChefProfile expands when tapped', (WidgetTester tester) async {
+    final chefProfile = ChefProfile(
+      imagePosition: 1,
+      name: 'agha',
+      email: 'agha@example.com',
+      specialties: 'pakistani',
+      experienceYears: '10',
+      currentRole: 'Head Chef',
+      location: 'New York',
+      restaurantName: 'The quetta cafe',
+      restaurantLocation: 'NYC',
+      restaurantWebsite: 'https://italianbistro.com',
+      cardColor: Colors.orange,
+      profilePictureUrl: 'https://example.com/profile.jpg',
+      worldRank: 5,
+      phone: '0310-0000000',
+    );
+
+    await tester.pumpWidget(MaterialApp(
+      home: Scaffold(body: chefProfile),
+    ));
+
+    expect(find.text('agha'), findsOneWidget);
+    expect(find.text('5'), findsOneWidget);
+    expect(find.text('agha@example.com'), findsNothing);
+
+    await tester.tap(find.byType(ChefProfile));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Specialty: pakistani'), findsOneWidget);
+    expect(find.text('Experience: 10'), findsOneWidget);
+    expect(find.text('Current Role: Head Chef'), findsOneWidget);
+    expect(find.text('Restaurants: The quetta cafe'), findsOneWidget);
+    expect(find.text('Location: NYC'), findsOneWidget);
+
+    expect(find.text('recipes'), findsOneWidget);
   });
 }

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:chefs_book/screens/add_dish_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:chefs_book/models/user.dart';
+import 'package:chefs_book/models/chef.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void showSnackBar(BuildContext context, String message) {
