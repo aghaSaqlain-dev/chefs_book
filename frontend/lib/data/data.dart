@@ -6,7 +6,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 // const String baseUrl = 'http://localhost:3000/api'; //ip address also works
-const String baseUrl = 'http://172.20.53.253/api'; //ip address also works
+const String baseUrl =
+    'https://chefs-book.vercel.app/api'; //ip address also works
 
 Future<List<Category>> _fetchCategories() async {
   final response = await http.get(Uri.parse('$baseUrl/categories'));

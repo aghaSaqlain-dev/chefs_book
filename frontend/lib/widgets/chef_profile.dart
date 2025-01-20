@@ -247,15 +247,18 @@ class _ChefProfileState extends State<ChefProfile>
                 ),
               ),
             ),
-            Column(
-              children: [
-                _buildDetailText('phone :', widget.phone, 14),
-                _buildDetailText('Email :', widget.email, 14),
-                _buildDetailText('Website :', widget.restaurantWebsite, 14),
-              ],
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildDetailText('phone :', widget.phone, 14),
+                  _buildDetailText('Email :', widget.email, 14),
+                  _buildDetailText('Website :', widget.restaurantWebsite, 14),
+                ],
+              ),
             ),
           ],
-        ),
+        )
       ],
     );
   }

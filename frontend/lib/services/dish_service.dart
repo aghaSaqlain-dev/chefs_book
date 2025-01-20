@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // String? uri = 'http://localhost:3000/api/dishes';
-String? uri = 'http://172.20.53.253/api/dishes';
+String? uri = 'https://chefs-book.vercel.app/api/dishes';
 Future<void> addDish({
   required BuildContext context,
   required Map<String, dynamic> data,

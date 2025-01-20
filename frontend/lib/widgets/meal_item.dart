@@ -60,7 +60,7 @@ class MealItem extends StatelessWidget {
                 child: Container(
                   color: Colors.black54,
                   padding:
-                      const EdgeInsets.symmetric(vertical: 5, horizontal: 44),
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
                   child: Column(
                     children: [
                       Text(
@@ -70,36 +70,38 @@ class MealItem extends StatelessWidget {
                         softWrap: true,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          MealItemTrait(
-                            icon: Icons.schedule,
-                            label: '${meal.duration} min',
+                          Expanded(
+                            child: MealItemTrait(
+                              icon: Icons.schedule,
+                              label: '${meal.duration} min',
+                            ),
                           ),
-                          const SizedBox(
-                            width: 12,
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: MealItemTrait(
+                              icon: Icons.work,
+                              label: ComplexityTextFormatted,
+                            ),
                           ),
-                          MealItemTrait(
-                            icon: Icons.work,
-                            label: ComplexityTextFormatted,
-                          ),
-                          const SizedBox(
-                            width: 12,
-                          ),
-                          MealItemTrait(
-                            icon: Icons.attach_money,
-                            label: AffordabilityTextFormatted,
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: MealItemTrait(
+                              icon: Icons.attach_money,
+                              label: AffordabilityTextFormatted,
+                            ),
                           ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),

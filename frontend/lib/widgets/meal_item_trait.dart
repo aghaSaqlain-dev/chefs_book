@@ -9,6 +9,7 @@ class MealItemTrait extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Icon(
           icon,
@@ -16,12 +17,15 @@ class MealItemTrait extends StatelessWidget {
           color: Colors.white,
         ),
         const SizedBox(
-          width: 6,
+          width: 5,
         ),
-        Text(
-          label,
-          style: const TextStyle(color: Colors.white),
-        )
+        Flexible(
+          child: Text(
+            label,
+            overflow: TextOverflow.visible,
+            style: const TextStyle(color: Colors.white),
+          ),
+        ),
       ],
     );
   }
